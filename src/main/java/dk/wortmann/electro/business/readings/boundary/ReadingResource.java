@@ -1,7 +1,34 @@
 package dk.wortmann.electro.business.readings.boundary;
 
-import javax.ws.rs.Path;
+import dk.wortmann.electro.business.readings.enitity.Reading;
 
-@Path()
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.PUT;
+
 public class ReadingResource {
+    private long id;
+    private ReadingManager manager;
+
+    public ReadingResource(long id, ReadingManager manager) {
+        this.id = id;
+        this.manager = manager;
+    }
+
+    @PUT
+    public Reading save(Reading reading) {
+        reading.setId(id);
+        return manager.save(reading);
+    }
+
+    @GET
+    public Reading find() {
+        return manager.findById(id);
+    }
+
+    @DELETE
+    public void delete() {
+        manager.delete(id);
+    }
+
 }
