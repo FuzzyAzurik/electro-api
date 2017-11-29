@@ -8,6 +8,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityNotFoundException;
 import javax.persistence.TypedQuery;
 import java.util.Collections;
 import java.util.List;
@@ -55,12 +56,23 @@ class ReadingManagerTest {
     }
 
     @Test
+    void delete_NoEntity() {
+        Reading input = new Reading();
+        input.setId(123L);
+
+        when(emMock.getReference(any(), anyLong())).thenThrow(EntityNotFoundException.class);
+        manager.delete(123L);
+
+        verify(emMock, times(0)).remove(eq(input));
+    }
+
+    @Test
     void all() {
         Reading inputReading = new Reading();
         inputReading.setId(123L);
         List<Reading> input = Collections.singletonList(inputReading);
 
-        TypedQuery typedQueryMock = mock(TypedQuery.class);
+        TypedQuery<Reading> typedQueryMock = mock(TypedQuery.class);
         when(emMock.createNamedQuery(eq(Reading.findAll), eq(Reading.class))).thenReturn(typedQueryMock);
         when(typedQueryMock.getResultList()).thenReturn(input);
 

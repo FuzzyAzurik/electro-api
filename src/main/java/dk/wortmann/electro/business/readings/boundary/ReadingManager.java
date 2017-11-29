@@ -14,6 +14,12 @@ public class ReadingManager {
     @PersistenceContext
     EntityManager em;
 
+
+    /**
+     * Default constructor
+     */
+    public ReadingManager() {}
+
     public ReadingManager(EntityManager em) {
         this.em = em;
     }
