@@ -1,4 +1,4 @@
-package dk.wortmann.electro.business.readings.enitity;
+package dk.wortmann.electro.business.blink.enitity;
 
 
 import javax.persistence.*;
@@ -8,12 +8,12 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @NamedQueries({
-        @NamedQuery(name = Reading.findAll, query = "SELECT r from Reading r")
+        @NamedQuery(name = Blink.findAll, query = "SELECT r from Blink r")
 })
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement
-public class Reading {
-    private static final String PREFIX = "readings.entity.Reading";
+public class Blink {
+    private static final String PREFIX = "readings.entity.Blink";
     public static final String findAll = PREFIX + "findAll";
 
     @Id

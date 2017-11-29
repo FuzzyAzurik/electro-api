@@ -1,7 +1,8 @@
 package dk.wortmann.electro.business.readings.boundary;
 
 import dk.wortmann.electro.MockitoExtension;
-import dk.wortmann.electro.business.readings.enitity.Reading;
+import dk.wortmann.electro.business.blink.boundary.BlinkManager;
+import dk.wortmann.electro.business.blink.enitity.Blink;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -22,30 +23,30 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 //@RunWith(JUnitPlatform.class)
-class ReadingManagerTest {
+class BlinkManagerTest {
 
     @Mock
     private EntityManager emMock;
 
-    private ReadingManager manager;
+    private BlinkManager manager;
 
     @BeforeEach
     void setUp() {
-        manager = new ReadingManager(emMock);
+        manager = new BlinkManager(emMock);
     }
 
     @Test
     void findById() {
-        when(emMock.merge(any(Reading.class))).thenReturn(new Reading());
+        when(emMock.merge(any(Blink.class))).thenReturn(new Blink());
 
-        Reading result = manager.save(new Reading());
+        Blink result = manager.save(new Blink());
 
         assertNotNull(result);
     }
 
     @Test
     void delete() {
-        Reading input = new Reading();
+        Blink input = new Blink();
         input.setId(123L);
 
         when(emMock.getReference(any(), anyLong())).thenReturn(input);
@@ -57,7 +58,7 @@ class ReadingManagerTest {
 
     @Test
     void delete_NoEntity() {
-        Reading input = new Reading();
+        Blink input = new Blink();
         input.setId(123L);
 
         when(emMock.getReference(any(), anyLong())).thenThrow(EntityNotFoundException.class);
@@ -68,31 +69,31 @@ class ReadingManagerTest {
 
     @Test
     void all() {
-        Reading inputReading = new Reading();
-        inputReading.setId(123L);
-        List<Reading> input = Collections.singletonList(inputReading);
+        Blink inputBlink = new Blink();
+        inputBlink.setId(123L);
+        List<Blink> input = Collections.singletonList(inputBlink);
 
-        TypedQuery<Reading> typedQueryMock = mock(TypedQuery.class);
-        when(emMock.createNamedQuery(eq(Reading.findAll), eq(Reading.class))).thenReturn(typedQueryMock);
+        TypedQuery<Blink> typedQueryMock = mock(TypedQuery.class);
+        when(emMock.createNamedQuery(eq(Blink.findAll), eq(Blink.class))).thenReturn(typedQueryMock);
         when(typedQueryMock.getResultList()).thenReturn(input);
 
-        List<Reading> result = manager.all();
+        List<Blink> result = manager.all();
 
         assertEquals(1, result.size());
-        assertEquals(inputReading, result.get(0));
+        assertEquals(inputBlink, result.get(0));
     }
 
     @Test
     void save() {
-        Reading inputReading = new Reading();
-        inputReading.setId(123L);
+        Blink inputBlink = new Blink();
+        inputBlink.setId(123L);
 
-        when(emMock.merge(eq(inputReading))).thenReturn(inputReading);
+        when(emMock.merge(eq(inputBlink))).thenReturn(inputBlink);
 
-        Reading result = manager.save(inputReading);
+        Blink result = manager.save(inputBlink);
 
-        verify(emMock, times(1)).merge(eq(inputReading));
-        assertEquals(inputReading, result);
+        verify(emMock, times(1)).merge(eq(inputBlink));
+        assertEquals(inputBlink, result);
 
     }
 }
