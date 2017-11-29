@@ -1,0 +1,1 @@
+INSERT INTO METER (ID, NAME) VALUES (99806, 'Blegkilde Alle 187 ST');
