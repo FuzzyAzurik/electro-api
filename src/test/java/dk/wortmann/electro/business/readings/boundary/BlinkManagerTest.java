@@ -4,6 +4,7 @@ import dk.wortmann.electro.MockitoExtension;
 import dk.wortmann.electro.business.blink.boundary.BlinkManager;
 import dk.wortmann.electro.business.blink.enitity.Blink;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -36,6 +37,7 @@ class BlinkManagerTest {
     }
 
     @Test
+    @DisplayName("find blink by id")
     void findById() {
         when(emMock.merge(any(Blink.class))).thenReturn(new Blink());
 
@@ -45,6 +47,7 @@ class BlinkManagerTest {
     }
 
     @Test
+    @DisplayName("delete blink by id")
     void delete() {
         Blink input = new Blink();
         input.setId(123L);
@@ -57,6 +60,7 @@ class BlinkManagerTest {
     }
 
     @Test
+    @DisplayName("delete blink by id, with no existing entity")
     void delete_NoEntity() {
         Blink input = new Blink();
         input.setId(123L);
@@ -68,6 +72,7 @@ class BlinkManagerTest {
     }
 
     @Test
+    @DisplayName("find all blinks")
     void all() {
         Blink inputBlink = new Blink();
         inputBlink.setId(123L);
@@ -84,6 +89,7 @@ class BlinkManagerTest {
     }
 
     @Test
+    @DisplayName("save blink")
     void save() {
         Blink inputBlink = new Blink();
         inputBlink.setId(123L);
@@ -94,6 +100,5 @@ class BlinkManagerTest {
 
         verify(emMock, times(1)).merge(eq(inputBlink));
         assertEquals(inputBlink, result);
-
     }
 }

@@ -11,7 +11,7 @@ import java.util.List;
 @Stateless
 public class BlinkManager {
 
-    @PersistenceContext
+    @PersistenceContext(unitName = "ELECTRO-PU")
     EntityManager em;
 
 

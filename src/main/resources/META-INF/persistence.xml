@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence xmlns="http://java.sun.com/xml/ns/persistence" version="2.0">
-    <persistence-unit name="electro-pu" transaction-type="JTA">
+    <persistence-unit name="ELECTRO-PU" transaction-type="JTA">
         <description>This is the unit manager for the electro-app</description>
         <jta-data-source>jdbc/electro-ds</jta-data-source>
         <exclude-unlisted-classes>false</exclude-unlisted-classes>

@@ -1,5 +1,4 @@
-package dk.wortmann.electro.business.blink.enitity;
-
+package dk.wortmann.electro.business.reading.entity;
 
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -7,30 +6,25 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.time.LocalDateTime;
 
+
 @Entity
 @NamedQueries({
-        @NamedQuery(name = Blink.findAll, query = "SELECT b from Blink b")
+        @NamedQuery(name = Reading.findAll, query = "select r from Reading r")
 })
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement
-public class Blink {
-    private static final String PREFIX = "blinks.entity.Blink";
+public class Reading {
+    private static final String PREFIX = "readings.entity.Reading";
     public static final String findAll = PREFIX + "findAll";
 
     @Id
     @GeneratedValue
     private long id;
 
-    @Column(name = "LIGHT_VALUE", nullable = false)
-    private int lightValue;
-
-    @Column(name = "LIGHT_RATIO", nullable = false)
-    private double lightRatio;
-
     @Column(name = "INSERTED_TIME", nullable = false, updatable = false)
     private LocalDateTime insertedTime;
 
-    @Column(name = "KWH_VALUE", nullable = false)
+    @Column(name = "KWH_VALUE", nullable = false, updatable = false)
     private double kwhValue;
 
     @Column(name = "METER_ID", nullable = false)
@@ -42,22 +36,6 @@ public class Blink {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public int getLightValue() {
-        return lightValue;
-    }
-
-    public void setLightValue(int lightValue) {
-        this.lightValue = lightValue;
-    }
-
-    public double getLightRatio() {
-        return lightRatio;
-    }
-
-    public void setLightRatio(double lightRatio) {
-        this.lightRatio = lightRatio;
     }
 
     public LocalDateTime getInsertedTime() {
@@ -84,6 +62,3 @@ public class Blink {
         this.meterId = meterId;
     }
 }
-
-
-

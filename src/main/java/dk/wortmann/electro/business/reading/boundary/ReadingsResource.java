@@ -1,6 +1,6 @@
-package dk.wortmann.electro.business.blink.boundary;
+package dk.wortmann.electro.business.reading.boundary;
 
-import dk.wortmann.electro.business.blink.enitity.Blink;
+import dk.wortmann.electro.business.reading.entity.Reading;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -11,27 +11,27 @@ import javax.ws.rs.core.UriInfo;
 import java.net.URI;
 import java.util.List;
 
-@Path("blinks")
+@Path("readings")
 @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-public class BlinksResource {
+public class ReadingsResource {
 
     @Inject
-    private BlinkManager manager;
+    ReadingManager manager;
 
     @Path("{id}")
-    public BlinkResource find(@PathParam("id") long id) {
-        return new BlinkResource(id, manager);
+    public ReadingResource find(@PathParam("id") long id) {
+        return new ReadingResource(id, manager);
     }
 
     @GET
-    public List<Blink> all() {
+    public List<Reading> all() {
         return this.manager.all();
     }
 
     @POST
-    public Response save(Blink blink, @Context UriInfo uriInfo) {
-        Blink saved = this.manager.save(blink);
+    public Response save(Reading reading, @Context UriInfo uriInfo) {
+        Reading saved = this.manager.save(reading);
         URI uri = uriInfo.getAbsolutePathBuilder().path("/" + saved.getId()).build();
         return Response.created(uri).build();
     }
