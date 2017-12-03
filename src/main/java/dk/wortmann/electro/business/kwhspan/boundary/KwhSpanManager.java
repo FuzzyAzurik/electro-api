@@ -9,7 +9,7 @@ import java.util.List;
 public class KwhSpanManager {
 
     @PersistenceContext(unitName = "ELECTRO-PU")
-    EntityManager em;
+    private EntityManager em;
 
     public KwhSpanManager() {}
 
