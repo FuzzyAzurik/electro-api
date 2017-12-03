@@ -12,6 +12,7 @@ import org.mockito.Mock;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.TypedQuery;
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 
@@ -23,7 +24,6 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-//@RunWith(JUnitPlatform.class)
 class BlinkManagerTest {
 
     @Mock
@@ -49,8 +49,7 @@ class BlinkManagerTest {
     @Test
     @DisplayName("delete blink by id")
     void delete() {
-        Blink input = new Blink();
-        input.setId(123L);
+        Blink input = createTestBlink();
 
         when(emMock.getReference(any(), anyLong())).thenReturn(input);
 
@@ -62,8 +61,7 @@ class BlinkManagerTest {
     @Test
     @DisplayName("delete blink by id, with no existing entity")
     void delete_NoEntity() {
-        Blink input = new Blink();
-        input.setId(123L);
+        Blink input = createTestBlink();
 
         when(emMock.getReference(any(), anyLong())).thenThrow(EntityNotFoundException.class);
         manager.delete(123L);
@@ -74,8 +72,7 @@ class BlinkManagerTest {
     @Test
     @DisplayName("find all blinks")
     void all() {
-        Blink inputBlink = new Blink();
-        inputBlink.setId(123L);
+        Blink inputBlink = createTestBlink();
         List<Blink> input = Collections.singletonList(inputBlink);
 
         TypedQuery<Blink> typedQueryMock = mock(TypedQuery.class);
@@ -91,14 +88,25 @@ class BlinkManagerTest {
     @Test
     @DisplayName("save blink")
     void save() {
-        Blink inputBlink = new Blink();
-        inputBlink.setId(123L);
+        Blink input = createTestBlink();
 
-        when(emMock.merge(eq(inputBlink))).thenReturn(inputBlink);
+        when(emMock.merge(eq(input))).thenReturn(input);
 
-        Blink result = manager.save(inputBlink);
+        Blink result = manager.save(input);
 
-        verify(emMock, times(1)).merge(eq(inputBlink));
-        assertEquals(inputBlink, result);
+        verify(emMock, times(1)).merge(eq(input));
+        assertEquals(input, result);
+    }
+
+    protected Blink createTestBlink() {
+        Blink blink = new Blink();
+        blink.setId(1234L);
+        blink.setInsertedTime(LocalDateTime.now());
+        blink.setLightRatio(10.4);
+        blink.setLightValue(12);
+        blink.setKwhValue(0.0001);
+        blink.setMeterId(99886L);
+
+        return blink;
     }
 }
