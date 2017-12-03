@@ -17,7 +17,7 @@ public class kwhSpansResource {
 
     @Inject
     private KwhSpanManager manager;
-    
+
     @GET
     public List<KwhSpan> all() {
         return this.manager.all();
