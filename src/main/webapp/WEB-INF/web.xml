@@ -1,0 +1,28 @@
+<!DOCTYPE web-app PUBLIC
+        "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+        "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app id="electro-webapp" version="3.1"
+         xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
+http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+    <display-name>Electro Services</display-name>
+
+    <!--<filter>
+        <filter-name>cors</filter-name>
+        <filter-class>dk.wortmann.filter.CORSFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>cors</filter-name>
+        <url-pattern>/api/*</url-pattern>
+    </filter-mapping>-->
+
+    <resource-ref>
+        <res-ref-name>jdbc/electro-ds</res-ref-name>
+        <res-type>javax.sql.DataSource</res-type>
+        <res-auth>Container</res-auth>
+        <res-sharing-scope>Shareable</res-sharing-scope>
+        <lookup-name>jdbc/electro-ds</lookup-name>
+    </resource-ref>
+</web-app>

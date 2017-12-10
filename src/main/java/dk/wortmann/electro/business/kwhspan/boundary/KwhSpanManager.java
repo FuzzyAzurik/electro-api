@@ -4,6 +4,7 @@ import dk.wortmann.electro.business.kwhspan.entity.KwhSpan;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import java.util.List;
 
 public class KwhSpanManager {
@@ -18,6 +19,7 @@ public class KwhSpanManager {
     }
 
     public List<KwhSpan> all() {
-        return this.em.createNamedQuery(KwhSpan.findAll, KwhSpan.class).getResultList();
+        TypedQuery<KwhSpan> query = this.em.createNamedQuery(KwhSpan.findAll, KwhSpan.class);
+        return query.getResultList();
     }
 }

@@ -10,7 +10,6 @@ import org.mockito.Mock;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
-import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 
@@ -50,8 +49,8 @@ class KwhSpanManagerTest {
 
     protected KwhSpan createTestKwhSpan() {
         KwhSpan kwhSpan = new KwhSpan();
-        kwhSpan.setKwhSum(0.04);
-        kwhSpan.setSpanStart(LocalDateTime.now());
+//        kwhSpan.setKwhSum(0.04);
+//        kwhSpan.setSpanStart(LocalDateTime.now());
 
         return kwhSpan;
     }

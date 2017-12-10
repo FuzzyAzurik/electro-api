@@ -1,10 +1,13 @@
 package dk.wortmann.electro.business.blink.enitity;
 
 
+import dk.wortmann.electro.business.adaptor.LocalDateTimeXmlAdaptor;
+
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.time.LocalDateTime;
 
 @Entity
@@ -28,6 +31,7 @@ public class Blink {
     private double lightRatio;
 
     @Column(name = "INSERTED_TIME", nullable = false, updatable = false)
+    @XmlJavaTypeAdapter(value = LocalDateTimeXmlAdaptor.class)
     private LocalDateTime insertedTime;
 
     @Column(name = "KWH_VALUE", nullable = false)

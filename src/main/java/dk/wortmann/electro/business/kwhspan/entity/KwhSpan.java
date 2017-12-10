@@ -1,36 +1,40 @@
 package dk.wortmann.electro.business.kwhspan.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
+import dk.wortmann.electro.business.adaptor.LocalDateTimeAdaptor;
+import dk.wortmann.electro.business.adaptor.LocalDateTimeXmlAdaptor;
+
+import javax.inject.Named;
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.time.LocalDateTime;
 
+
 @Entity
-@NamedQueries({
-        @NamedQuery(name = "KwhSpan.getAll", query = "select " +
-                "new dk.wortmann.electro.business.kwhspan.entity.KwhSpan(func('DATE_FORMAT', b.insertedTime, '%Y-%m-%d %H:%i:00'), sum(b.kwhValue)) " +
-                "from Blink b group by func('DIV', func('UNIX_TIMESTAMP', b.insertedTime), 300), b.kwhValue")
+@NamedNativeQueries({
+        @NamedNativeQuery(name = KwhSpan.findAll, query = "SELECT \n" +
+                "  TIMESTAMP(DATE_FORMAT(b.INSERTED_TIME, '%Y-%m-%d %H:%i:00')) AS SPAN_START,\n" +
+                "  sum(b.KWH_VALUE)                                   AS KWH_SUM\n" +
+                "FROM BLINK b\n" +
+                "GROUP BY UNIX_TIMESTAMP(b.INSERTED_TIME) DIV 300, b.KWH_VALUE", resultClass = KwhSpan.class)
 })
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement
 public class KwhSpan {
     private static final String PREFIX = "kwhspan.entity.KwhSpan";
-    public static final String findAll = PREFIX + "findAll";
+    public static final String findAll = PREFIX + ".findAll";
 
     @Id
+    @Column(name = "SPAN_START")
+    @XmlJavaTypeAdapter(value = LocalDateTimeXmlAdaptor.class)
     private LocalDateTime spanStart;
+
+    @Column(name = "KWH_SUM")
     private double kwhSum;
 
     public KwhSpan() {
-    }
-
-    public KwhSpan(LocalDateTime start, double kwhSum) {
-        this.spanStart = start;
-        this.kwhSum = kwhSum;
     }
 
     public LocalDateTime getSpanStart() {
