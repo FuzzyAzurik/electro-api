@@ -1,10 +1,10 @@
 CREATE TABLE BLINK (
-  ID          BIGINT AUTO_INCREMENT,
+  ID          BIGSERIAL,
   LIGHT_VALUE INT                                 NULL,
-  LIGHT_RATIO DECIMAL(10, 2)                      NULL,
+  LIGHT_RATIO NUMERIC(10, 2)                      NULL,
   INSERTED_TIME TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
   METER_ID    BIGINT                              NOT NULL,
-  KWH_VALUE   DECIMAL(10, 8)                      NOT NULL,
+  KWH_VALUE   NUMERIC(10, 8)                      NOT NULL,
   PRIMARY KEY (ID),
   FOREIGN KEY (METER_ID) REFERENCES METER(ID)
 );
