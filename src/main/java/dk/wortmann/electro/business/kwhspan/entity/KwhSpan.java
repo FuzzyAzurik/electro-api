@@ -14,11 +14,14 @@ import java.time.LocalDateTime;
 
 @Entity
 @NamedNativeQueries({
-        @NamedNativeQuery(name = KwhSpan.findAll, query = "SELECT \n" +
-                "  TIMESTAMP(DATE_FORMAT(b.INSERTED_TIME, '%Y-%m-%d %H:%i:00')) AS SPAN_START,\n" +
-                "  sum(b.KWH_VALUE)                                   AS KWH_SUM\n" +
-                "FROM BLINK b\n" +
-                "GROUP BY UNIX_TIMESTAMP(b.INSERTED_TIME) DIV 300, b.KWH_VALUE", resultClass = KwhSpan.class)
+        @NamedNativeQuery(name = KwhSpan.findAll, query = "" +
+                "SELECT\n" +
+                "  sum(b.kwh_value),\n" +
+                "  to_timestamp(floor((extract('epoch' FROM b.inserted_time) / 300)) * 300)\n" +
+                "  AT TIME ZONE 'UTC' AS interval_alias\n" +
+                "FROM blink b\n" +
+                "GROUP BY interval_alias\n" +
+                "ORDER BY interval_alias;")
 })
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement
