@@ -33,6 +33,16 @@
 
 
         <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>2.10.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>2.10.0</version>
+        </dependency>
+        <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
             <version>7.0</version>
@@ -103,7 +113,7 @@
                             <goal>migrate</goal>
                         </goals>
                         <configuration>
-                            <configFile>src/test/resources/flyway-it.properties</configFile>
+                            <configFile>src/test/resources/it/flyway-it.properties</configFile>
                         </configuration>
                     </execution>
                 </executions>
@@ -126,9 +136,9 @@
                 </configuration>
                 <executions>
                     <execution>
-                        <id>server-start</id>
+                        <id>server-install</id>
                         <goals>
-                            <goal>start-server</goal>
+                            <goal>install-server</goal>
                         </goals>
                         <phase>pre-integration-test</phase>
                         <configuration>
@@ -148,9 +158,20 @@
                         </goals>
                         <phase>pre-integration-test</phase>
                         <configuration>
+                            <configFile>src/test/resources/it/server.xml</configFile>
                             <appsDirectory>apps</appsDirectory>
                             <installAppPackages>project</installAppPackages>
                             <stripVersion>true</stripVersion>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>server-start</id>
+                        <goals>
+                            <goal>start-server</goal>
+                        </goals>
+                        <phase>pre-integration-test</phase>
+                        <configuration>
+                            <configFile>src/test/resources/it/server.xml</configFile>
                         </configuration>
                     </execution>
                     <execution>
@@ -176,15 +197,16 @@
                         <groupId>net.wasdev.wlp.maven.plugins</groupId>
                         <artifactId>liberty-maven-plugin</artifactId>
                         <version>2.0</version>
+                        <inherited>false</inherited>
                         <executions>
                             <execution>
                                 <id>install-apps</id>
-                                <phase>pre-integration-test</phase>
+                                <phase>package</phase>
                                 <goals>
                                     <goal>install-apps</goal>
                                 </goals>
                                 <configuration>
-                                    <appsDirectory>dropins</appsDirectory>
+                                    <appsDirectory>apps</appsDirectory>
                                     <stripVersion>true</stripVersion>
                                     <installAppPackages>project</installAppPackages>
                                 </configuration>

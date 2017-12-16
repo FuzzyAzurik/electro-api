@@ -1,4 +1,4 @@
-package dk.wortmann.electro.business.readings.boundary;
+package dk.wortmann.electro.business.blink.boundary;
 
 import dk.wortmann.electro.business.blink.boundary.BlinkManager;
 import dk.wortmann.electro.business.blink.enitity.Blink;
