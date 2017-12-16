@@ -70,12 +70,57 @@
                         <artifactId>postgresql</artifactId>
                         <version>9.4.1208-jdbc42-atlassian-hosted</version>
                     </dependency>
-                    <!--<dependency>
-                        <groupId>mysql</groupId>
-                        <artifactId>mysql-connector-java</artifactId>
-                        <version>5.1.44</version>
-                    </dependency>-->
                 </dependencies>
+            </plugin>
+
+            <plugin>
+                <groupId>net.wasdev.wlp.maven.plugins</groupId>
+                <artifactId>liberty-maven-plugin</artifactId>
+                <version>2.0</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <features>
+                        <acceptLicense>true</acceptLicense>
+                    </features>
+                    <serverName>integration-test-electro</serverName>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>server-start</id>
+                        <goals>
+                            <goal>start-server</goal>
+                        </goals>
+                        <phase>pre-integration-test</phase>
+                        <configuration>
+                            <assemblyArtifact>
+                                <groupId>com.ibm.websphere.appserver.runtime</groupId>
+                                <artifactId>wlp-javaee7</artifactId>
+                                <version>17.0.0.3</version>
+                                <type>zip</type>
+                            </assemblyArtifact>
+                            <assemblyInstallDirectory>${project.build.directory}/liberty</assemblyInstallDirectory>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>install-test-app</id>
+                        <goals>
+                            <goal>install-apps</goal>
+                        </goals>
+                        <phase>pre-integration-test</phase>
+                        <configuration>
+                            <appsDirectory>apps</appsDirectory>
+                            <installAppPackages>project</installAppPackages>
+                            <stripVersion>true</stripVersion>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>server-stop</id>
+                        <goals>
+                            <goal>stop-server</goal>
+                        </goals>
+                        <phase>post-integration-test</phase>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
