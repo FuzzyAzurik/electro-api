@@ -1,39 +1,37 @@
 package dk.wortmann.electro.business.kwhspan.boundary;
 
-import dk.wortmann.electro.MockitoExtension;
 import dk.wortmann.electro.business.kwhspan.entity.KwhSpan;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-@ExtendWith(MockitoExtension.class)
-class KwhSpanManagerTest {
+@RunWith(MockitoJUnitRunner.class)
+public class KwhSpanManagerTest {
 
     @Mock
     EntityManager emMock;
 
     KwhSpanManager manager;
 
-    @BeforeEach
-    void setUp() {
+    @Before
+    public void setUp() {
         this.manager = new KwhSpanManager(emMock);
     }
 
     @Test
-    @DisplayName("find all kwhSpans")
-    void all() {
+    public void all() {
         KwhSpan inputKwhSpan = createTestKwhSpan();
         List<KwhSpan> input = Collections.singletonList(inputKwhSpan);
 

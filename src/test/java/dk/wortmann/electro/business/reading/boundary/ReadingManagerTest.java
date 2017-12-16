@@ -1,12 +1,11 @@
 package dk.wortmann.electro.business.reading.boundary;
 
-import dk.wortmann.electro.MockitoExtension;
 import dk.wortmann.electro.business.reading.entity.Reading;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -14,28 +13,27 @@ import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
-@ExtendWith(MockitoExtension.class)
-class ReadingManagerTest {
+@RunWith(MockitoJUnitRunner.class)
+public class ReadingManagerTest {
 
     @Mock
     EntityManager emMock;
 
     ReadingManager manager;
 
-    @BeforeEach
-    void setUp() {
+    @Before
+    public void setUp() {
         manager = new ReadingManager(emMock);
     }
 
     @Test
-    @DisplayName("read all readings")
-    void all() {
+    public void all() {
         Reading reading = new Reading();
         reading.setId(123L);
 
@@ -55,8 +53,7 @@ class ReadingManagerTest {
     }
 
     @Test
-    @DisplayName("save reading")
-    void save() {
+    public void save() {
         Reading input = createTestReading();
 
         when(emMock.merge(eq(input))).thenReturn(input);
@@ -69,8 +66,7 @@ class ReadingManagerTest {
     }
 
     @Test
-    @DisplayName("find reading by id")
-    void findById() {
+    public void findById() {
         Reading input = createTestReading();
 
         when(emMock.find(eq(Reading.class), eq(input.getId()))).thenReturn(input);
@@ -82,8 +78,7 @@ class ReadingManagerTest {
     }
 
     @Test
-    @DisplayName("delete reading by id")
-    void delete() {
+    public void delete() {
         Reading input = createTestReading();
 
         when(emMock.getReference(eq(Reading.class), eq(input.getId()))).thenReturn(input);
