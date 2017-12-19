@@ -4,221 +4,140 @@
     <groupId>dk.wortmann</groupId>
     <artifactId>electro</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>war</packaging>
+    <packaging>pom</packaging>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <failOnMissingWebXml>false</failOnMissingWebXml>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>4.12</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-core</artifactId>
+                <version>2.11.0</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-api</artifactId>
+                <version>2.10.0</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-core</artifactId>
+                <version>2.10.0</version>
+            </dependency>
+            <dependency>
+                <groupId>javax</groupId>
+                <artifactId>javaee-api</artifactId>
+                <version>7.0</version>
+                <scope>provided</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.12</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-core</artifactId>
-            <version>2.11.0</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.glassfish.jersey.core</groupId>
-            <artifactId>jersey-client</artifactId>
-            <version>2.25.1</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.glassfish.jersey.media</groupId>
-            <artifactId>jersey-media-json-jackson</artifactId>
-            <version>2.25.1</version>
-            <scope>test</scope>
-        </dependency>
-
-
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
-            <version>2.10.0</version>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
-            <version>2.10.0</version>
-        </dependency>
-        <dependency>
-            <groupId>javax</groupId>
-            <artifactId>javaee-api</artifactId>
-            <version>7.0</version>
-            <scope>provided</scope>
         </dependency>
     </dependencies>
 
-    <properties>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <failOnMissingWebXml>false</failOnMissingWebXml>
-    </properties>
+    <build><!-- Define and configure plugins -->
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>2.3.2</version>
+                    <configuration>
+                        <encoding>UTF-8</encoding>
+                        <source>1.6</source>
+                        <target>1.6</target>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-war-plugin</artifactId>
+                    <version>2.3</version>
+                    <configuration><!-- Ignore error about missing web.xml -->
+                        <failOnMissingWebXml>false</failOnMissingWebXml>
+                        <archive><!-- Do not include META-INF/maven to avoid long file problems on windows -->
+                            <addMavenDescriptor>false</addMavenDescriptor>
+                        </archive>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>2.19.1</version>
+                    <configuration>
+                        <includes>
+                            <include>**/*Test.java</include>
+                        </includes>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-failsafe-plugin</artifactId>
+                    <version>2.20.1</version>
+                    <configuration>
+                        <forkMode>once</forkMode>
+                        <forkedProcessTimeoutInSeconds>300
+                        </forkedProcessTimeoutInSeconds><!-- Specify which test classes are integration tests -->
+                        <includes>
+                            <include>**/*IT.java</include>
+                        </includes>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>integration-test</goal>
+                                <goal>verify</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.apache.maven.surefire</groupId>
+                            <artifactId>surefire-junit47</artifactId>
+                            <version>2.20.1</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+                <plugin>
+                    <groupId>net.wasdev.wlp.maven.plugins</groupId>
+                    <artifactId>liberty-maven-plugin</artifactId>
+                    <version>2.1.1</version>
+                </plugin>
 
-
-    <build>
-        <finalName>electro</finalName>
-
-        <plugins>
-            <plugin>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.19.1</version>
-                <configuration>
-                    <includes>
-                        <include>**/*Test.java</include>
-                    </includes>
-                </configuration>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-failsafe-plugin</artifactId>
-                <version>2.20.1</version>
-                <executions>
-                    <execution>
-                        <id>integration-test</id>
-                        <goals>
-                            <goal>integration-test</goal>
-                        </goals>
-                        <configuration>
-                            <includes>
-                                <include>
-                                    **/*IT.java
-                                </include>
-                            </includes>
-                        </configuration>
-                    </execution>
-                </executions>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.apache.maven.surefire</groupId>
-                        <artifactId>surefire-junit47</artifactId>
-                        <version>2.20.1</version>
-                    </dependency>
-                </dependencies>
-            </plugin>
-
-            <plugin>
-                <groupId>org.flywaydb</groupId>
-                <artifactId>flyway-maven-plugin</artifactId>
-                <version>4.2.0</version>
-                <executions>
-                    <execution>
-                        <id>flyway-integration-migrate</id>
-                        <phase>pre-integration-test</phase>
-                        <goals>
-                            <goal>clean</goal>
-                            <goal>migrate</goal>
-                        </goals>
-                        <configuration>
-                            <configFile>src/test/resources/it/flyway-it.properties</configFile>
-                        </configuration>
-                    </execution>
-                </executions>
-                <dependencies>
-                    <dependency>
-                        <groupId>postgresql</groupId>
-                        <artifactId>postgresql</artifactId>
-                        <version>9.4.1208-jdbc42-atlassian-hosted</version>
-                    </dependency>
-                </dependencies>
-            </plugin>
-
-            <plugin>
-                <groupId>net.wasdev.wlp.maven.plugins</groupId>
-                <artifactId>liberty-maven-plugin</artifactId>
-                <version>2.0</version>
-                <extensions>true</extensions>
-                <configuration>
-                    <serverName>app</serverName>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>server-install</id>
-                        <goals>
-                            <goal>install-server</goal>
-                        </goals>
-                        <phase>pre-integration-test</phase>
-                        <configuration>
-                            <assemblyArtifact>
-                                <groupId>dk.wortmann</groupId>
-                                <artifactId>was-integration-test-server</artifactId>
-                                <version>1.0-SNAPSHOT</version>
-                                <type>zip</type>
-                            </assemblyArtifact>
-                            <assemblyInstallDirectory>${project.build.directory}/liberty</assemblyInstallDirectory>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>install-test-app</id>
-                        <goals>
-                            <goal>install-apps</goal>
-                        </goals>
-                        <phase>pre-integration-test</phase>
-                        <configuration>
-                            <configFile>src/test/resources/it/server.xml</configFile>
-                            <appsDirectory>apps</appsDirectory>
-                            <installAppPackages>project</installAppPackages>
-                            <stripVersion>true</stripVersion>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>server-start</id>
-                        <goals>
-                            <goal>start-server</goal>
-                        </goals>
-                        <phase>pre-integration-test</phase>
-                        <configuration>
-                            <configFile>src/test/resources/it/server.xml</configFile>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>server-stop</id>
-                        <goals>
-                            <goal>stop-server</goal>
-                        </goals>
-                        <phase>post-integration-test</phase>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
+                <plugin>
+                    <groupId>org.flywaydb</groupId>
+                    <artifactId>flyway-maven-plugin</artifactId>
+                    <version>4.2.0</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
 
-    <!-- PROFILES -->
-    <profiles>
-        <profile>
-            <id>dev</id>
-            <build>
-                <plugins>
-                    <!-- Enable liberty-maven-plugin -->
-                    <plugin>
-                        <groupId>net.wasdev.wlp.maven.plugins</groupId>
-                        <artifactId>liberty-maven-plugin</artifactId>
-                        <version>2.0</version>
-                        <inherited>false</inherited>
-                        <executions>
-                            <execution>
-                                <id>install-apps</id>
-                                <phase>package</phase>
-                                <goals>
-                                    <goal>install-apps</goal>
-                                </goals>
-                                <configuration>
-                                    <appsDirectory>apps</appsDirectory>
-                                    <stripVersion>true</stripVersion>
-                                    <installAppPackages>project</installAppPackages>
-                                </configuration>
-                            </execution>
-                        </executions>
-                        <configuration>
-                            <installDirectory>/home/jacob/Programs/was-app</installDirectory>
-                            <serverName>app</serverName>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
+    <modules>
+        <module>api</module>
+        <module>test</module>
+    </modules>
 </project>

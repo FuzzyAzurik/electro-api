@@ -1,6 +1,5 @@
 package dk.wortmann.electro.business.blink.boundary;
 
-import dk.wortmann.electro.business.blink.boundary.BlinkManager;
 import dk.wortmann.electro.business.blink.enitity.Blink;
 import org.junit.Before;
 import org.junit.Test;

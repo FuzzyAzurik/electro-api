@@ -23,8 +23,8 @@
     <!-- To access this server from a remote client add a host attribute to
         the following element, e.g. host="*" -->
     <httpEndpoint id="defaultHttpEndpoint"
-                  httpPort="9090"
-                  httpsPort="9453" />
+                  httpPort="${httpPort}"
+                  httpsPort="${httpsPort}" />
 
     <library id="PostgresLib">
         <fileset dir="dependency_libs" includes="postgresql-42.1.4.jar"/>
