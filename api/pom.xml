@@ -29,104 +29,32 @@
 
     <build>
         <finalName>electro</finalName>
-
         <plugins>
-
-
-            <!--<plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <version>3.0.2</version>
-                <executions>
-                    <execution>
-                        <id>copy</id>
-                        <phase>pre-integration-test</phase>
-                        <goals>
-                            <goal>copy</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <artifactItems>
-                        <artifactItem>
-                                <groupId>org.postgresql</groupId>
-                                <artifactId>postgresql</artifactId>
-                                <version>42.1.4</version>
-                            <type>jar</type>
-                            <overWrite>true</overWrite>
-                            <outputDirectory>${project.build.directory}/wlp/usr/servers/integration-test-server/dependency_libs</outputDirectory>
-                            &lt;!&ndash;<destFileName>optional-new-name.jar</destFileName>&ndash;&gt;
-                        </artifactItem>
-                    </artifactItems>
-                </configuration>
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
             </plugin>
 
             <plugin>
-                <groupId>net.wasdev.wlp.maven.plugins</groupId>
-                <artifactId>liberty-maven-plugin</artifactId>
-                <version>2.0</version>
-                <extensions>true</extensions>
-                <configuration>
-                    <skipTestServer>true</skipTestServer>
-                    <serverName>integration-test-server</serverName>
-                </configuration>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.1.0</version>
                 <executions>
                     <execution>
-                        <id>server-install</id>
+                        <id>flyway-assembly</id>
                         <goals>
-                            <goal>install-server</goal>
+                            <goal>single</goal>
                         </goals>
-                        <phase>pre-integration-test</phase>
+                        <phase>package</phase>
                         <configuration>
-                            <assemblyArtifact>
-                                <groupId>com.ibm.websphere.appserver.runtime</groupId>
-                                <artifactId>wlp-javaee7</artifactId>
-                                <version>17.0.0.3</version>
-                                <type>zip</type>
-                            </assemblyArtifact>
+                            <descriptors>
+                                <descriptor>src/assembly/flyway.xml</descriptor>
+                            </descriptors>
                         </configuration>
-                    </execution>
-                    <execution>
-                        <id>server-start</id>
-                        <goals>
-                            <goal>start-server</goal>
-                        </goals>
-                        <phase>pre-integration-test</phase>
-                        <configuration>
-                            <configFile>src/test/resources/it/server.xml</configFile>
-
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>install-test-app</id>
-                        <goals>
-                            <goal>install-apps</goal>
-                        </goals>
-                        <phase>pre-integration-test</phase>
-                        <configuration>
-                            <configFile>src/test/resources/it/server.xml</configFile>
-                            <appsDirectory>apps</appsDirectory>
-                            <installAppPackages>project</installAppPackages>
-                            <stripVersion>true</stripVersion>
-
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>server-stop</id>
-                        <goals>
-                            <goal>stop-server</goal>
-                        </goals>
-                        <phase>post-integration-test</phase>
                     </execution>
                 </executions>
-            </plugin>-->
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                </configuration>
             </plugin>
         </plugins>
     </build>
