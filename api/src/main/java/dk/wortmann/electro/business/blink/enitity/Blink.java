@@ -21,7 +21,7 @@ public class Blink {
     public static final String findAll = PREFIX + "findAll";
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Column(name = "LIGHT_VALUE", nullable = false)

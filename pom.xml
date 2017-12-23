@@ -29,12 +29,12 @@
             <dependency>
                 <groupId>org.apache.logging.log4j</groupId>
                 <artifactId>log4j-api</artifactId>
-                <version>2.10.0</version>
+                <version>2.9.1</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.logging.log4j</groupId>
                 <artifactId>log4j-core</artifactId>
-                <version>2.10.0</version>
+                <version>2.9.1</version>
             </dependency>
             <dependency>
                 <groupId>javax</groupId>
@@ -78,9 +78,6 @@
                     <version>2.3</version>
                     <configuration><!-- Ignore error about missing web.xml -->
                         <failOnMissingWebXml>false</failOnMissingWebXml>
-                        <archive><!-- Do not include META-INF/maven to avoid long file problems on windows -->
-                            <addMavenDescriptor>false</addMavenDescriptor>
-                        </archive>
                     </configuration>
                 </plugin>
                 <plugin>
@@ -99,8 +96,7 @@
                     <version>2.20.1</version>
                     <configuration>
                         <forkMode>once</forkMode>
-                        <forkedProcessTimeoutInSeconds>300
-                        </forkedProcessTimeoutInSeconds><!-- Specify which test classes are integration tests -->
+                        <forkedProcessTimeoutInSeconds>300</forkedProcessTimeoutInSeconds><!-- Specify which test classes are integration tests -->
                         <includes>
                             <include>**/*IT.java</include>
                         </includes>

@@ -2,13 +2,14 @@ package dk.wortmann.electro.business.reading.boundary;
 
 import dk.wortmann.electro.business.reading.entity.Reading;
 
+import javax.enterprise.context.RequestScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
+@RequestScoped
 public class ReadingManager {
-
 
     @PersistenceContext(unitName = "ELECTRO-PU")
     EntityManager em;

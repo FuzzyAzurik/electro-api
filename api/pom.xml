@@ -21,12 +21,6 @@
         </dependency>
     </dependencies>
 
-    <properties>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
-    </properties>
-
-
     <build>
         <finalName>electro</finalName>
         <plugins>
@@ -56,6 +50,9 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
             </plugin>
+            <plugin>
+                <artifactId>maven-war-plugin</artifactId>
+            </plugin>
         </plugins>
     </build>
 
@@ -69,8 +66,6 @@
                     <plugin>
                         <groupId>net.wasdev.wlp.maven.plugins</groupId>
                         <artifactId>liberty-maven-plugin</artifactId>
-                        <version>2.0</version>
-                        <inherited>false</inherited>
                         <executions>
                             <execution>
                                 <id>install-apps</id>
@@ -79,15 +74,15 @@
                                     <goal>install-apps</goal>
                                 </goals>
                                 <configuration>
-                                    <appsDirectory>apps</appsDirectory>
+                                    <appsDirectory>dropins</appsDirectory>
                                     <stripVersion>true</stripVersion>
                                     <installAppPackages>project</installAppPackages>
                                 </configuration>
                             </execution>
                         </executions>
                         <configuration>
-                            <installDirectory>/home/jacob/Programs/was-app</installDirectory>
-                            <serverName>app</serverName>
+                            <installDirectory>/home/jacob/Programs/wlp-openliberty</installDirectory>
+                            <serverName>electro</serverName>
                         </configuration>
                     </plugin>
                 </plugins>

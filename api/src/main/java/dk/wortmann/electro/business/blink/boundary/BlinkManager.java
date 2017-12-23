@@ -2,13 +2,13 @@ package dk.wortmann.electro.business.blink.boundary;
 
 import dk.wortmann.electro.business.blink.enitity.Blink;
 
-import javax.ejb.Stateless;
+import javax.enterprise.context.RequestScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
-@Stateless
+@RequestScoped
 public class BlinkManager {
 
     @PersistenceContext(unitName = "ELECTRO-PU")

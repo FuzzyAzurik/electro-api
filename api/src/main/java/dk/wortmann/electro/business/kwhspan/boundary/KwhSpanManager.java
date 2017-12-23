@@ -2,11 +2,13 @@ package dk.wortmann.electro.business.kwhspan.boundary;
 
 import dk.wortmann.electro.business.kwhspan.entity.KwhSpan;
 
+import javax.enterprise.context.RequestScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
+@RequestScoped
 public class KwhSpanManager {
 
     @PersistenceContext(unitName = "ELECTRO-PU")

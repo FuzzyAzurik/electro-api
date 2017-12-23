@@ -18,7 +18,7 @@ public class Reading {
     public static final String findAll = PREFIX + "findAll";
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Column(name = "INSERTED_TIME", nullable = false, updatable = false)

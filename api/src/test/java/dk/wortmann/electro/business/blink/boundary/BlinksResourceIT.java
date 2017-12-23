@@ -1,7 +1,7 @@
 package dk.wortmann.electro.business.blink.boundary;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+//import org.apache.logging.log4j.LogManager;
+//import org.apache.logging.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -13,7 +13,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 public class BlinksResourceIT {
-    private static final Logger LOG = LogManager.getLogger(BlinksResourceIT.class);
+//    private static final Logger LOG = LogManager.getLogger(BlinksResourceIT.class);
     private static final String ENDPOINT = "http://localhost:9090/electro/api/blinks";
     private Client client;
 
@@ -32,7 +32,7 @@ public class BlinksResourceIT {
         Invocation invocation = target.request(MediaType.APPLICATION_JSON_TYPE).buildGet();
         Response response = invocation.invoke();
 
-        LOG.info(response.readEntity(String.class));
+//        LOG.info(response.readEntity(String.class));
     }
 
     @Test
