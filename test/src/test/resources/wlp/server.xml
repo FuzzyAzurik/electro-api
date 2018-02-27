@@ -32,7 +32,7 @@
 
     <authData id="electro-user" password="jobKalGu1" user="jacob"/>
 
-    <dataSource id="electro-ds" jndiName="jdbc/electro-ds">
+    <dataSource id="electro-ds" jndiName="jdbc/electro-ds" containerAuthDataRef="electro-user">
         <jdbcDriver libraryRef="PostgresLib"/>
         <properties databaseName="jacob" portNumber="5432" serverName="localhost"/>
         <onConnect>SET search_path = "ELECTRO-IT"</onConnect>

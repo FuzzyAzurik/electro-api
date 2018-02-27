@@ -28,6 +28,50 @@
                 <artifactId>maven-surefire-plugin</artifactId>
             </plugin>
 
+            <!-- Copy and clean node dir -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <configuration>
+                    <filteringDeploymentDescriptors>true</filteringDeploymentDescriptors>
+                    <webResources>
+                        <resource>
+                            <directory>${project.build.directory}/</directory>
+                            <includes>
+                                <include>apidocs/**</include>
+                            </includes>
+                        </resource>
+                    </webResources>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.10.4</version>
+                <executions>
+                    <execution>
+                        <id>generate-services-docs</id>
+                        <phase>generate-resources</phase>
+                        <configuration>
+                            <doclet>com.tenxerconsulting.swagger.doclet.ServiceDoclet</doclet>
+                            <docletArtifact>
+                                <groupId>com.tenxerconsulting</groupId>
+                                <artifactId>swagger-doclet</artifactId>
+                                <version>1.0.7</version>
+                            </docletArtifact>
+                            <reportOutputDirectory>${project.build.directory}/apidocs</reportOutputDirectory>
+                            <useStandardDocletOptions>false</useStandardDocletOptions>
+                            <additionalparam>-apiVersion 1 -docBasePath /${project.artifactId}/apidocs -apiBasePath
+                                /${project.artifactId}/api
+                            </additionalparam>
+                        </configuration>
+                        <goals>
+                            <goal>javadoc</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <version>3.1.0</version>
@@ -50,9 +94,6 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
             </plugin>
-            <plugin>
-                <artifactId>maven-war-plugin</artifactId>
-            </plugin>
         </plugins>
     </build>
 
@@ -74,7 +115,7 @@
                                     <goal>install-apps</goal>
                                 </goals>
                                 <configuration>
-                                    <appsDirectory>dropins</appsDirectory>
+                                    <appsDirectory>apps</appsDirectory>
                                     <stripVersion>true</stripVersion>
                                     <installAppPackages>project</installAppPackages>
                                 </configuration>

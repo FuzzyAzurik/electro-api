@@ -41,8 +41,10 @@ public class BlinksResourceIT {
                 .add("kwhValue", 0.0001)
                 .add("meterId", 99806)
                 .build();
+        LOG.debug(blink);
         Entity<JsonObject> entity = Entity.json(blink);
         Response saveResponse = target.request(MediaType.APPLICATION_JSON_TYPE).buildPost(entity).invoke();
+        LOG.debug("response: {}", saveResponse);
         LOG.info("response status for save " + saveResponse.getStatusInfo().getFamily());
         assertTrue(saveResponse.getStatusInfo().getFamily().equals(Response.Status.Family.SUCCESSFUL));
 
