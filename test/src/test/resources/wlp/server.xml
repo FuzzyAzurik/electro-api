@@ -8,11 +8,11 @@
             <feature>restConnector-2.0</feature>
     </featureManager>
 
-    <keyStore id="defaultKeyStore" password="jobKalGu1"/>
+    <keyStore id="defaultKeyStore" password="password123"/>
 
 
     <basicRegistry id="basic" realm="BasicRealm">
-        <user name="jacob" password="jobKalGu1"/>
+        <user name="jacob" password="password123"/>
     </basicRegistry>
 
     <administrator-role>
