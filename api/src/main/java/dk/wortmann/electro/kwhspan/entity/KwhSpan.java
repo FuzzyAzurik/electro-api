@@ -14,12 +14,12 @@ import java.time.LocalDateTime;
 @NamedNativeQueries({
         @NamedNativeQuery(name = KwhSpan.findAll, query = "" +
                 "SELECT\n" +
-                "  sum(b.kwh_value),\n" +
                 "  to_timestamp(floor((extract('epoch' FROM b.inserted_time) / 300)) * 300)\n" +
-                "  AT TIME ZONE 'UTC' AS interval_alias\n" +
+                "  AT TIME ZONE 'UTC' AS SPAN_START,\n" +
+                "  sum(b.kwh_value) AS KWH_SUM\n" +
                 "FROM blink b\n" +
-                "GROUP BY interval_alias\n" +
-                "ORDER BY interval_alias;")
+                "GROUP BY SPAN_START\n" +
+                "ORDER BY SPAN_START;", resultClass = KwhSpan.class)
 })
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement
