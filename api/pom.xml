@@ -22,13 +22,11 @@
     </dependencies>
 
     <build>
-        <finalName>electro</finalName>
+        <finalName>electro-api</finalName>
         <plugins>
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
             </plugin>
-
-
 
             <plugin>
                 <groupId>com.webcohesion.enunciate</groupId>
@@ -95,8 +93,6 @@
                     </webResources>
                 </configuration>
             </plugin>
-
-
         </plugins>
     </build>
 

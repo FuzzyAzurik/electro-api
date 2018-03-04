@@ -87,6 +87,18 @@ public class Blink {
     public void setMeterId(long meterId) {
         this.meterId = meterId;
     }
+
+    @Override
+    public String toString() {
+        return "Blink{" +
+                "id=" + id +
+                ", lightValue=" + lightValue +
+                ", lightRatio=" + lightRatio +
+                ", insertedTime=" + insertedTime +
+                ", kwhValue=" + kwhValue +
+                ", meterId=" + meterId +
+                '}';
+    }
 }
 
 

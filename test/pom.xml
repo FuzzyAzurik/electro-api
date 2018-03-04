@@ -168,13 +168,26 @@
                         </configuration>
                     </execution>
                     <execution>
+                        <id>install-feature</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>install-feature</goal>
+                        </goals>
+                        <configuration>
+                            <features>
+                                <acceptLicense>true</acceptLicense>
+                            </features>
+                        </configuration>
+                    </execution>
+                    <execution>
                         <id>install-apps</id>
                         <phase>pre-integration-test</phase>
                         <goals>
                             <goal>install-apps</goal>
                         </goals>
                         <configuration><!-- Drop application into apps/ directory -->
-                            <appsDirectory>apps</appsDirectory>
+                            <stripVersion>true</stripVersion>
+                            <appsDirectory>dropins</appsDirectory>
                         </configuration>
                     </execution>
                     <execution> <!-- Start the server -->
@@ -200,7 +213,7 @@
                     <assemblyArtifact>
                         <groupId>com.ibm.websphere.appserver.runtime</groupId>
                         <artifactId>wlp-javaee7</artifactId>
-                        <version>17.0.0.3</version>
+                        <version>17.0.0.4</version>
                         <type>zip</type>
                     </assemblyArtifact>
                     <assemblyInstallDirectory>${project.build.directory}</assemblyInstallDirectory>
