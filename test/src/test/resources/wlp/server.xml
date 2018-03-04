@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<server description="integration-test-server-electro">
+
+    <!-- Enable features -->
+    <featureManager>
+            <feature>javaee-7.0</feature>
+            <feature>localConnector-1.0</feature>
+            <feature>restConnector-2.0</feature>
+    </featureManager>
+
+    <keyStore id="defaultKeyStore" password="jobKalGu1"/>
+
+
+    <basicRegistry id="basic" realm="BasicRealm">
+        <user name="jacob" password="jobKalGu1"/>
+    </basicRegistry>
+
+    <administrator-role>
+        <user>jacob</user>
+    </administrator-role>
+
+    <!-- To access this server from a remote client add a host attribute to
+        the following element, e.g. host="*" -->
+    <httpEndpoint id="defaultHttpEndpoint"
+                  httpPort="${httpPort}"
+                  httpsPort="${httpsPort}" />
+
+    <library id="PostgresLib">
+        <fileset dir="dependency_libs" includes="postgresql-42.1.4.jar"/>
+    </library>
+
+    <authData id="electro-user" password="jobKalGu1" user="jacob"/>
+
+    <dataSource id="electro-ds" jndiName="jdbc/electro-ds" containerAuthDataRef="electro-user">
+        <jdbcDriver libraryRef="PostgresLib"/>
+        <properties databaseName="jacob" portNumber="5432" serverName="localhost"/>
+        <onConnect>SET search_path = "ELECTRO-IT"</onConnect>
+    </dataSource>
+
+    <!-- Automatically expand WAR files and EAR files -->
+    <applicationMonitor updateTrigger="polled"/>
+</server>

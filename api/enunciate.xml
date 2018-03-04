@@ -1,0 +1,20 @@
+<enunciate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:noNamespaceSchemaLocation="http://enunciate.webcohesion.com/schemas/enunciate-2.0.0-M.3.xsd">
+
+    <title>Electro REST API</title>
+    <description package="dk.wortmann.electro"/>
+    <copyright>jacobwortmann.dk</copyright>
+
+
+    <api-classes>
+        <include pattern="dk.wortmann.**"/>
+    </api-classes>
+
+    <modules>
+
+        <!--<jackson disabled="false"/>-->
+        <!--<jackson1 disabled="true"/>-->
+        <swagger basePath="/electro-api/api"/>
+    </modules>
+
+</enunciate>
