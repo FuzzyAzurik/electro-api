@@ -20,8 +20,10 @@ public class KwhSpanManager {
         this.em = em;
     }
 
-    public List<KwhSpan> all() {
+    public List<KwhSpan> all(int limit, int spanInSeconds) {
         TypedQuery<KwhSpan> query = this.em.createNamedQuery(KwhSpan.findAll, KwhSpan.class);
+        query.setMaxResults(limit);
+        query.setParameter("spanInSeconds", spanInSeconds);
         return query.getResultList();
     }
 }

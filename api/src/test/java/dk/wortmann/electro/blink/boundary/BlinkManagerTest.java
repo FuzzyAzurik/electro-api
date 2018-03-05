@@ -73,7 +73,7 @@ public class BlinkManagerTest {
         when(emMock.createNamedQuery(eq(Blink.findAll), eq(Blink.class))).thenReturn(typedQueryMock);
         when(typedQueryMock.getResultList()).thenReturn(input);
 
-        List<Blink> result = manager.all();
+        List<Blink> result = manager.all(20);
 
         assertEquals(1, result.size());
         assertEquals(inputBlink, result.get(0));

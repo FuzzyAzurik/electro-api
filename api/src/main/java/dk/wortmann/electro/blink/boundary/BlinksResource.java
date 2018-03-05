@@ -28,8 +28,8 @@ public class BlinksResource {
     }
 
     @GET
-    public List<Blink> all() {
-        return this.manager.all();
+    public List<Blink> all(@QueryParam("limit") @DefaultValue("200") int limit) {
+        return this.manager.all(limit);
     }
 
     @POST

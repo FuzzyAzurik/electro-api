@@ -3,10 +3,7 @@ package dk.wortmann.electro.kwhspan.boundary;
 import dk.wortmann.electro.kwhspan.entity.KwhSpan;
 
 import javax.inject.Inject;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
@@ -19,7 +16,8 @@ public class kwhSpansResource {
     private KwhSpanManager manager;
 
     @GET
-    public List<KwhSpan> all() {
-        return this.manager.all();
+    public List<KwhSpan> all(@QueryParam("limit") @DefaultValue("200") int limit,
+                             @QueryParam("span") @DefaultValue("300") int spanInSeconds) {
+        return this.manager.all(limit, spanInSeconds);
     }
 }

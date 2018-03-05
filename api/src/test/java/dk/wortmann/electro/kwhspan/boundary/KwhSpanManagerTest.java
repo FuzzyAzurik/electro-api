@@ -39,7 +39,7 @@ public class KwhSpanManagerTest {
         when(emMock.createNamedQuery(eq(KwhSpan.findAll), eq(KwhSpan.class))).thenReturn(typedQueryKwhSpan);
         when(typedQueryKwhSpan.getResultList()).thenReturn(input);
 
-        List<KwhSpan> result = manager.all();
+        List<KwhSpan> result = manager.all(20, 300);
 
         assertEquals(1, result.size());
         assertEquals(inputKwhSpan, result.get(0));

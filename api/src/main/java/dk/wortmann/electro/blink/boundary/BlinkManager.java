@@ -1,15 +1,19 @@
 package dk.wortmann.electro.blink.boundary;
 
 import dk.wortmann.electro.blink.enitity.Blink;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import java.util.List;
 
 @Stateless
 public class BlinkManager {
+    private static final Logger LOG = LogManager.getLogger(BlinkManager.class);
 
     @PersistenceContext(unitName = "ELECTRO-PU")
     EntityManager em;
@@ -33,12 +37,14 @@ public class BlinkManager {
             Blink blink = this.em.getReference(Blink.class, id);
             em.remove(blink);
         } catch (EntityNotFoundException e) {
-            // TODO: 11/27/17 we can log it!
+            LOG.error("Unable to find blink with id: {}", id);
         }
     }
 
-    public List<Blink> all() {
-        return this.em.createNamedQuery(Blink.findAll, Blink.class).getResultList();
+    public List<Blink> all(int limit) {
+        TypedQuery<Blink> query = this.em.createNamedQuery(Blink.findAll, Blink.class);
+        query.setMaxResults(limit);
+        return query.getResultList();
     }
 
     public Blink save(Blink blink) {
