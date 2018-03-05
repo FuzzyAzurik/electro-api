@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @NamedNativeQueries({
         @NamedNativeQuery(name = KwhSpan.findAll, query = "" +
                 "SELECT\n" +
-                "  to_timestamp(floor((extract('epoch' FROM b.inserted_time) / :spanInSeconds)) * :spanInSeconds)\n" +
+                "  to_timestamp(floor((extract('epoch' FROM b.inserted_time) / ?1)) * ?1)\n" +
                 "  AT TIME ZONE 'UTC' AS SPAN_START,\n" +
                 "  sum(b.kwh_value) AS KWH_SUM\n" +
                 "FROM blink b\n" +
