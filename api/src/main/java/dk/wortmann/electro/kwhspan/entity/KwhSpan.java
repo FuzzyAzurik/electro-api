@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
                 "  sum(b.kwh_value) AS KWH_SUM\n" +
                 "FROM blink b\n" +
                 "GROUP BY SPAN_START\n" +
-                "ORDER BY SPAN_START;", resultClass = KwhSpan.class)
+                "ORDER BY SPAN_START DESC;", resultClass = KwhSpan.class)
 })
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement

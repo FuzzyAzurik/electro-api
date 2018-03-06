@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @NamedQueries({
-        @NamedQuery(name = Reading.findAll, query = "select r from Reading r")
+        @NamedQuery(name = Reading.findAll, query = "select r from Reading r order by r.insertedTime DESC")
 })
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement

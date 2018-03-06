@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @NamedQueries({
-        @NamedQuery(name = Blink.findAll, query = "SELECT b from Blink b")
+        @NamedQuery(name = Blink.findAll, query = "SELECT b from Blink b order by b.insertedTime DESC")
 })
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement
