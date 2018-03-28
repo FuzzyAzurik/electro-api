@@ -2,3 +2,4 @@
 *.iml
 target/
 flyway.properties
+**/flyway-it.properties
