@@ -30,5 +30,4 @@ public class BlinkResource {
     public void delete() {
         manager.delete(id);
     }
-
 }

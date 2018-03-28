@@ -19,7 +19,7 @@ import javax.ws.rs.core.Response;
 import java.nio.charset.Charset;
 import java.time.LocalDateTime;
 
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class BlinksResourceIT {
     private static final Logger LOG = LogManager.getLogger(BlinksResourceIT.class);
@@ -33,7 +33,8 @@ public class BlinksResourceIT {
 
     @Test
     public void all() {
-        WebTarget target = client.target(ENDPOINT);
+        // GIVEN
+        WebTarget target = this.client.target(ENDPOINT);
         JsonObject blink = Json.createObjectBuilder()
                 .add("lightValue", 10)
                 .add("lightRatio", 1.3)
@@ -43,20 +44,23 @@ public class BlinksResourceIT {
                 .build();
         Entity<String> entity = Entity.json(blink.toString());
         Response saveResponse = target.request(MediaType.APPLICATION_JSON).buildPost(entity).invoke();
-        LOG.info("response status for save " + saveResponse.getStatusInfo().getFamily());
-        assertTrue(saveResponse.getStatusInfo().getFamily().equals(Response.Status.Family.SUCCESSFUL));
 
-
+        // WHEN
         Response readResponse = target.request(MediaType.APPLICATION_JSON).buildGet().invoke();
         JsonReader reader = Json.createReader(IOUtils.toInputStream(readResponse.readEntity(String.class), Charset.forName("utf8")));
         JsonArray jsonArray = reader.readArray();
         LOG.info("response status for read " + saveResponse.getStatusInfo().getFamily());
-        assertTrue(jsonArray.size() > 0);
+
+        // THEN
+        assertThat(saveResponse.getStatusInfo().getFamily()).isEqualByComparingTo(Response.Status.Family.SUCCESSFUL);
+        assertThat(jsonArray.size()).isGreaterThan(0);
     }
+
+
 
     @Test
     public void save() {
-        WebTarget target = client.target(ENDPOINT);
+        WebTarget target = this.client.target(ENDPOINT);
         JsonObject blink = Json.createObjectBuilder()
                 .add("lightValue", 10)
                 .add("lightRatio", 1.3)
@@ -66,6 +70,29 @@ public class BlinksResourceIT {
                 .build();
         Entity<String> entity = Entity.json(blink.toString());
         Response response = target.request(MediaType.APPLICATION_JSON).buildPost(entity).invoke();
-        assertTrue(response.getStatusInfo().getFamily().equals(Response.Status.Family.SUCCESSFUL));
+        assertThat(response.getStatusInfo().getFamily()).isEqualByComparingTo(Response.Status.Family.SUCCESSFUL);
+        assertThat(response.getLocation()).isNotNull();
+    }
+
+    @Test
+    public void delete() {
+        // GIVEN
+        WebTarget target = this.client.target(ENDPOINT);
+        JsonObject blink = Json.createObjectBuilder()
+                .add("lightValue", 10)
+                .add("lightRatio", 1.3)
+                .add("insertedTime", LocalDateTime.now().toString())
+                .add("kwhValue", 0.0001)
+                .add("meterId", 99806)
+                .build();
+        Entity<String> entity = Entity.json(blink.toString());
+        Response saveResponse = target.request(MediaType.APPLICATION_JSON).buildPost(entity).invoke();
+
+        // WHEN
+        target = this.client.target(saveResponse.getLocation());
+        Response deleteResponse = target.request().buildDelete().invoke();
+
+        // THEN
+        assertThat(deleteResponse.getStatusInfo().getFamily()).isEqualByComparingTo(Response.Status.Family.SUCCESSFUL);
     }
 }
