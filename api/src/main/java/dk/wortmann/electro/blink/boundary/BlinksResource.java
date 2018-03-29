@@ -22,6 +22,14 @@ public class BlinksResource {
     @Inject
     private BlinkManager manager;
 
+    @Inject
+    private BlinkGroupsResource blinkGroupsResource;
+
+    @Path("/group")
+    public BlinkGroupsResource group() {
+        return blinkGroupsResource;
+    }
+
     @Path("{id}")
     public BlinkResource find(@PathParam("id") long id) {
         return new BlinkResource(id, manager);

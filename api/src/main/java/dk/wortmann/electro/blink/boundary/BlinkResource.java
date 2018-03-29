@@ -15,6 +15,8 @@ public class BlinkResource {
         this.manager = manager;
     }
 
+
+
     @PUT
     public Blink save(Blink blink) {
         blink.setId(id);

@@ -42,14 +42,12 @@ public class BlinkManager {
     }
 
     public List<Blink> all(int limit) {
-        TypedQuery<Blink> query = this.em.createNamedQuery(Blink.findAll, Blink.class);
-        query.setMaxResults(limit);
+        TypedQuery<Blink> query = this.em.createNamedQuery(Blink.findAll, Blink.class)
+                .setMaxResults(limit);
         return query.getResultList();
     }
 
     public Blink save(Blink blink) {
         return this.em.merge(blink);
     }
-
-
 }
