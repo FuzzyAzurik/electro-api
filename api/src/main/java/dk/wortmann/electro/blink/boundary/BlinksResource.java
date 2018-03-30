@@ -4,6 +4,7 @@ import dk.wortmann.electro.blink.enitity.Blink;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
@@ -20,14 +21,14 @@ public class BlinksResource {
     private static final Logger LOG = LogManager.getLogger(BlinksResource.class);
 
     @Inject
-    private BlinkManager manager;
+    private BlinkGroupManager groupManager;
 
     @Inject
-    private BlinkGroupsResource blinkGroupsResource;
+    private BlinkManager manager;
 
     @Path("/group")
     public BlinkGroupsResource group() {
-        return blinkGroupsResource;
+        return new BlinkGroupsResource(groupManager);
     }
 
     @Path("{id}")
@@ -41,6 +42,7 @@ public class BlinksResource {
     }
 
     @POST
+    @RolesAllowed({"admin", "producers"})
     public Response save(Blink blink, @Context UriInfo uriInfo) {
         LOG.debug(blink);
         Blink saved = this.manager.save(blink);

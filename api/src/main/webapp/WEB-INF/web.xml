@@ -25,4 +25,9 @@ http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
         <res-sharing-scope>Shareable</res-sharing-scope>
         <lookup-name>jdbc/electro-ds</lookup-name>
     </resource-ref>
+
+    <login-config>
+        <auth-method>BASIC</auth-method>
+        <realm-name>electro-api-realm</realm-name>
+    </login-config>
 </web-app>

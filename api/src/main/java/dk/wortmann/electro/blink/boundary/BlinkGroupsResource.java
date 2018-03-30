@@ -2,7 +2,6 @@ package dk.wortmann.electro.blink.boundary;
 
 import dk.wortmann.electro.blink.enitity.BlinkGroup;
 
-import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
@@ -11,8 +10,11 @@ import java.util.List;
 @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 public class BlinkGroupsResource {
 
-    @Inject
     private BlinkGroupManager manager;
+
+    public BlinkGroupsResource(BlinkGroupManager manager) {
+        this.manager = manager;
+    }
 
     @GET
     public List<BlinkGroup> all(@QueryParam("limit") @DefaultValue("200") int limit,

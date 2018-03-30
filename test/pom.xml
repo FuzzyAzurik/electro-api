@@ -192,7 +192,7 @@
                         </goals>
                         <configuration><!-- Drop application into apps/ directory -->
                             <stripVersion>true</stripVersion>
-                            <appsDirectory>dropins</appsDirectory>
+                            <appsDirectory>apps</appsDirectory>
                         </configuration>
                     </execution>
                     <execution> <!-- Start the server -->

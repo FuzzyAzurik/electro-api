@@ -1,10 +1,12 @@
 package dk.wortmann.electro.kwhspan.boundary;
 
+import dk.wortmann.electro.Authentication;
 import dk.wortmann.electro.blink.boundary.BlinksResourceIT;
 import org.apache.commons.io.IOUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import javax.json.Json;
@@ -28,7 +30,7 @@ public class kwhSpansResourceIT {
 
     @Before
     public void setUp() {
-        client = ClientBuilder.newClient();
+        client = ClientBuilder.newClient().register(new Authentication("jacob", "password"));
     }
 
     @Test

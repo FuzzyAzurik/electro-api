@@ -3,21 +3,19 @@
 
     <!-- Enable features -->
     <featureManager>
-            <feature>javaee-7.0</feature>
-            <feature>localConnector-1.0</feature>
-            <feature>restConnector-2.0</feature>
+        <feature>localConnector-1.0</feature>
+        <feature>restConnector-2.0</feature>
+        <feature>jndi-1.0</feature>
+        <feature>jaxrs-2.0</feature>
+        <feature>jpa-2.1</feature>
+        <feature>appSecurity-2.0</feature>
+        <feature>ejbLite-3.2</feature>
+        <feature>ssl-1.0</feature>
+        <feature>jaxb-2.2</feature>
+        <feature>cdi-1.2</feature>
     </featureManager>
 
     <keyStore id="defaultKeyStore" password="password123"/>
-
-
-    <basicRegistry id="basic" realm="BasicRealm">
-        <user name="jacob" password="password123"/>
-    </basicRegistry>
-
-    <administrator-role>
-        <user>jacob</user>
-    </administrator-role>
 
     <!-- To access this server from a remote client add a host attribute to
         the following element, e.g. host="*" -->
@@ -39,4 +37,27 @@
 
     <!-- Automatically expand WAR files and EAR files -->
     <applicationMonitor updateTrigger="polled"/>
+
+    <basicRegistry id="electro-api-registry" realm="electro-api-realm">
+        <user name="jacob" password="password"/>
+        <user name="producer" password="password"/>
+        <group name="producers">
+            <member name="producer" />
+        </group>
+
+        <group name="administrators">
+            <member name="jacob" />
+        </group>
+    </basicRegistry>
+
+    <application id="electro-api" location="electro-api.war" name="electro-api" type="war">
+        <application-bnd>
+            <security-role name="producer">
+                <group name="producers"/>
+            </security-role>
+            <security-role name="admin">
+                <group name="administrators"/>
+            </security-role>
+        </application-bnd>
+    </application>
 </server>

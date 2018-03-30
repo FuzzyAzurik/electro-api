@@ -1,5 +1,6 @@
 package dk.wortmann.electro.blink.boundary;
 
+import dk.wortmann.electro.Authentication;
 import org.apache.commons.io.IOUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -28,7 +29,7 @@ public class BlinksResourceIT {
 
     @Before
     public void setUp() {
-        client = ClientBuilder.newClient();
+        client = ClientBuilder.newClient().register(new Authentication("jacob", "password"));
     }
 
     @Test
@@ -49,10 +50,10 @@ public class BlinksResourceIT {
         Response readResponse = target.request(MediaType.APPLICATION_JSON).buildGet().invoke();
         JsonReader reader = Json.createReader(IOUtils.toInputStream(readResponse.readEntity(String.class), Charset.forName("utf8")));
         JsonArray jsonArray = reader.readArray();
-        LOG.info("response status for read " + saveResponse.getStatusInfo().getFamily());
+        LOG.info("response status for read " + readResponse.getStatusInfo().getFamily());
 
         // THEN
-        assertThat(saveResponse.getStatusInfo().getFamily()).isEqualByComparingTo(Response.Status.Family.SUCCESSFUL);
+        assertThat(readResponse.getStatusInfo().getFamily()).isEqualByComparingTo(Response.Status.Family.SUCCESSFUL);
         assertThat(jsonArray.size()).isGreaterThan(0);
     }
 

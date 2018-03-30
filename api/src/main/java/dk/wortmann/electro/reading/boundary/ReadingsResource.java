@@ -2,6 +2,7 @@ package dk.wortmann.electro.reading.boundary;
 
 import dk.wortmann.electro.reading.entity.Reading;
 
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
@@ -30,6 +31,7 @@ public class ReadingsResource {
     }
 
     @POST
+    @RolesAllowed({"admin", "producers"})
     public Response save(Reading reading, @Context UriInfo uriInfo) {
         Reading saved = this.manager.save(reading);
         URI uri = uriInfo.getAbsolutePathBuilder().path("/" + saved.getId()).build();
